@@ -88,14 +88,14 @@ export default function InteractiveContent() {
     // Calculate total height needed for all sections
     const sectionHeight = isMobile
       ? window.innerHeight * contentBlocks.length * 1.5 // More space for mobile
-      : window.innerHeight * contentBlocks.length;
+      : window.innerHeight * contentBlocks.length - 400;
 
     // Set up the main pin (desktop only)
     if (!isMobile) {
       ScrollTrigger.create({
         trigger: section,
         start: "top top",
-        end: `+=${sectionHeight}px - 50px`,
+        end: `+=${sectionHeight}px - 200px`,
         pin: true,
         pinSpacing: true,
         scrub: 0.2,
@@ -187,8 +187,7 @@ export default function InteractiveContent() {
                     });
                   }
                 }}
-                onClick={() => isMobile && setActiveIndex(index)}
-              >
+                onClick={() => isMobile && setActiveIndex(index)}>
                 <h2 className={`text-xl md:text-2xl font-bold mb-2 ${safeActiveIndex === index ? 'text-[#FFD700]' : 'text-black'}`}>
                   {block.title}
                 </h2>

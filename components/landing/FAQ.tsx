@@ -24,25 +24,25 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Frequently Asked Questions
           </h2>
-          <p className="max-w-2xl mx-auto text-gray-600">
+          <p className="max-w-2xl mx-auto text-gray-600 text-lg md:text-xl">
             Find answers to common questions about our AI avatar services.
           </p>
         </motion.div>
 
         <motion.div
-          className="max-w-3xl mx-auto"
+          className="max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -59,12 +59,12 @@ export default function FAQ() {
               >
                 <AccordionItem
                   value={`item-${index}`}
-                  className="border-b border-gray-200"
+                  className="border-b border-gray-200 py-4"
                 >
-                  <AccordionTrigger className="text-left hover:text-yellow transition-colors">
+                  <AccordionTrigger className="text-left hover:text-yellow transition-colors text-lg md:text-xl font-semibold">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-600">
+                  <AccordionContent className="text-gray-600 text-base md:text-lg pt-2">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
