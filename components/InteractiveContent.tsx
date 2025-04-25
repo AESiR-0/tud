@@ -37,13 +37,26 @@ const contentBlocks = [
 export default function InteractiveContent() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const cursorRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Custom cursor animation
+  // Check if device is mobile
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Custom cursor animation (desktop only)
+  useEffect(() => {
+    if (isMobile) return;
+
     const cursor = cursorRef.current;
     if (!cursor) return;
 
@@ -63,7 +76,7 @@ export default function InteractiveContent() {
     return () => {
       window.removeEventListener('mousemove', moveCursor);
     };
-  }, [mousePosition]);
+  }, [mousePosition, isMobile]);
 
   // Scroll-based animations and pinning
   useEffect(() => {
@@ -73,19 +86,22 @@ export default function InteractiveContent() {
     if (!section || !contents.length || !image) return;
 
     // Calculate total height needed for all sections
-    const sectionHeight = window.innerHeight * contentBlocks.length;
-    const sectionGap = window.innerHeight * 0.2; // 20% of viewport height as gap
+    const sectionHeight = isMobile
+      ? window.innerHeight * contentBlocks.length * 1.5 // More space for mobile
+      : window.innerHeight * contentBlocks.length;
 
-    // Set up the main pin
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: `+=${sectionHeight}px - 50px`,
-      pin: true,
-      pinSpacing: true,
-      scrub: 0.2,
-      markers: false,
-    });
+    // Set up the main pin (desktop only)
+    if (!isMobile) {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: `+=${sectionHeight}px - 50px`,
+        pin: true,
+        pinSpacing: true,
+        scrub: 0.2,
+        markers: false,
+      });
+    }
 
     // Create a timeline for smooth transitions
     const timeline = gsap.timeline({
@@ -93,9 +109,9 @@ export default function InteractiveContent() {
         trigger: section,
         start: "top top",
         end: `+=${sectionHeight}px`,
-        scrub: 0.4,
+        scrub: isMobile ? 0.8 : 0.4, // Slower scrub on mobile
         onUpdate: (self) => {
-          const progress = Math.min(Math.max(self.progress, 0), 1); // Clamp progress between 0 and 1
+          const progress = Math.min(Math.max(self.progress, 0), 1);
           const sectionIndex = Math.min(
             Math.floor(progress * contentBlocks.length),
             contentBlocks.length - 1
@@ -123,38 +139,40 @@ export default function InteractiveContent() {
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, [activeIndex]);
+  }, [activeIndex, isMobile]);
 
   // Ensure activeIndex is always valid
   const safeActiveIndex = Math.min(Math.max(activeIndex, 0), contentBlocks.length - 1);
 
   return (
     <div ref={sectionRef} className="relative min-h-screen bg-yellow text-black overflow-hidden">
-      {/* Custom Cursor */}
-      <div
-        ref={cursorRef}
-        className="fixed w-4 h-4 pointer-events-none z-50 mix-blend-difference"
-      >
-        <div className="w-full h-full bg-black rounded-sm relative">
-          <div className="absolute top-0 left-0 w-1 h-1 bg-black animate-pulse" />
+      {/* Custom Cursor (desktop only) */}
+      {!isMobile && (
+        <div
+          ref={cursorRef}
+          className="fixed w-4 h-4 pointer-events-none z-50 mix-blend-difference"
+        >
+          <div className="w-full h-full bg-black rounded-sm relative">
+            <div className="absolute top-0 left-0 w-1 h-1 bg-black animate-pulse" />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="container mx-auto px-4 pt-5 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-screen">
-          {/* Left Column - Content Blocks */}
-          <div className="flex flex-col justify-center space-y-8">
+        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-8 ${isMobile ? 'h-auto' : 'h-screen'}`}>
+          {/* Content Blocks */}
+          <div className={`flex flex-col ${isMobile ? 'space-y-4' : 'space-y-8'} ${isMobile ? 'order-2' : ''}`}>
             {contentBlocks.map((block, index) => (
               <div
                 key={block.id}
                 ref={el => { contentRefs.current[index] = el; }}
-                className={`p-6 rounded-lg transition-all duration-300 cursor-pointer
-                  ${safeActiveIndex === index 
-                    ? 'bg-black text-white' 
+                className={`p-4 md:p-6 rounded-lg transition-all duration-300 cursor-pointer
+                  ${safeActiveIndex === index
+                    ? 'bg-black text-white'
                     : 'bg-white hover:bg-white/90 shadow-lg'
                   }`}
                 onMouseEnter={() => {
-                  if (cursorRef.current) {
+                  if (!isMobile && cursorRef.current) {
                     gsap.to(cursorRef.current, {
                       scale: 1.5,
                       duration: 0.2,
@@ -162,26 +180,27 @@ export default function InteractiveContent() {
                   }
                 }}
                 onMouseLeave={() => {
-                  if (cursorRef.current) {
+                  if (!isMobile && cursorRef.current) {
                     gsap.to(cursorRef.current, {
                       scale: 1,
                       duration: 0.2,
                     });
                   }
                 }}
+                onClick={() => isMobile && setActiveIndex(index)}
               >
-                <h2 className={`text-2xl font-bold mb-2 ${safeActiveIndex === index ? 'text-[#FFD700]' : 'text-black'}`}>
+                <h2 className={`text-xl md:text-2xl font-bold mb-2 ${safeActiveIndex === index ? 'text-[#FFD700]' : 'text-black'}`}>
                   {block.title}
                 </h2>
-                <p className={safeActiveIndex === index ? 'text-white' : 'text-gray-800'}>
+                <p className={`text-sm md:text-base ${safeActiveIndex === index ? 'text-white' : 'text-gray-800'}`}>
                   {block.description}
                 </p>
               </div>
             ))}
           </div>
 
-          {/* Right Column - Image */}
-          <div className="relative h-full">
+          {/* Image */}
+          <div className={`relative ${isMobile ? 'h-64 md:h-96 mb-8' : 'h-full'} ${isMobile ? 'order-1' : ''}`}>
             <div
               ref={imageRef}
               className="absolute inset-0 rounded-lg overflow-hidden shadow-2xl"
@@ -192,6 +211,7 @@ export default function InteractiveContent() {
                 fill
                 className="object-cover"
                 priority
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>

@@ -36,26 +36,30 @@ const testimonials2 = [
   { src: "/images/TUD Assets-18.png", name: "arun pandit" },
 ];
 
+// Create duplicate arrays for seamless marquee
+const marqueeItems1 = [...testimonials1, ...testimonials1];
+const marqueeItems2 = [...testimonials2, ...testimonials2];
+
 export default function Testimonials() {
   return (
-    <section className="py-16 bg-yellow">
+    <section className="py-12 md:py-20 bg-yellow overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-8 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-black">
             What Our Clients Say
           </h2>
-          <p className="max-w-2xl mx-auto text-black/80">
+          <p className="max-w-2xl mx-auto text-black/80 text-base md:text-lg">
             Don't just take our word for it. Here's what our customers have to say.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-20">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
@@ -64,8 +68,8 @@ export default function Testimonials() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <Card className="bg-white/90 backdrop-blur-sm shadow-lg">
-                <CardContent className="pt-6">
+              <Card className="bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="p-6 md:p-8">
                   <div className="flex mb-4">
                     {[...Array(testimonial.stars)].map((_, i) => (
                       <Star
@@ -74,11 +78,11 @@ export default function Testimonials() {
                       />
                     ))}
                   </div>
-                  <blockquote className="italic mb-6 text-black">
+                  <blockquote className="italic mb-6 text-black text-base md:text-lg">
                     "{testimonial.quote}"
                   </blockquote>
                   <div>
-                    <p className="text-sm text-black/70 font-medium">
+                    <p className="text-sm md:text-base text-black/70 font-medium">
                       {testimonial.role}
                     </p>
                   </div>
@@ -88,57 +92,69 @@ export default function Testimonials() {
           ))}
         </div>
 
-        <motion.div
-          className="h-[13rem] md:h-[15rem] rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden opacity-60"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="absolute inset-0 flex flex-col gap-4">
-            <div className="flex animate-marquee">
-              {testimonials1.map((testimonial, index) => (
-                <motion.div
-                  key={index}
-                  className="mx-4"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                >
-                  <Image
-                    src={testimonial.src}
-                    alt={testimonial.name}
-                    width={150}
-                    height={100}
-                    className="object-contain h-20 w-auto"
-                  />
-                </motion.div>
-              ))}
-            </div>
-            <div className="flex animate-marquee-reverse">
-              {testimonials2.map((testimonial, index) => (
-                <motion.div
-                  key={index}
-                  className="mx-4"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                >
-                  <Image
-                    src={testimonial.src}
-                    alt={testimonial.name}
-                    width={150}
-                    height={100}
-                    className="object-contain h-20 w-auto"
-                  />
-                </motion.div>
-              ))}
-            </div>
+        <div className="relative w-full overflow-hidden">
+          {/* First Marquee */}
+          <div className="flex animate-marquee whitespace-nowrap py-4">
+            {marqueeItems1.map((testimonial, index) => (
+              <div
+                key={index}
+                className="inline-flex items-center justify-center mx-4 md:mx-8"
+              >
+                <Image
+                  src={testimonial.src}
+                  alt={testimonial.name}
+                  width={150}
+                  height={100}
+                  className="object-contain h-12 md:h-16 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+            ))}
           </div>
-        </motion.div>
+
+          {/* Second Marquee */}
+          <div className="flex animate-marquee-reverse whitespace-nowrap py-4">
+            {marqueeItems2.map((testimonial, index) => (
+              <div
+                key={index}
+                className="inline-flex items-center justify-center mx-4 md:mx-8"
+              >
+                <Image
+                  src={testimonial.src}
+                  alt={testimonial.name}
+                  width={150}
+                  height={100}
+                  className="object-contain h-12 md:h-16 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        @keyframes marquee-reverse {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+        .animate-marquee {
+          animation: marquee 20s linear infinite;
+        }
+        .animate-marquee-reverse {
+          animation: marquee-reverse 20s linear infinite;
+        }
+      `}</style>
     </section>
   );
 } 
