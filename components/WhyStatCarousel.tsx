@@ -13,7 +13,7 @@ const cards = [
       { icon: '🎥', text: 'Webinar recordings' },
       { icon: '💬', text: 'WhatsApp & CRM Messaging' },
     ],
-    image: 'https://source.unsplash.com/random/800x600?avatar',
+    image: '/random/800x600?avatar',
   },
   {
     title: 'AI Video Creators',
@@ -25,7 +25,7 @@ const cards = [
       { icon: '📱', text: 'Social-Ready Formats' },
       { icon: '⚡', text: 'Ultra-fast Rendering' },
     ],
-    image: 'https://source.unsplash.com/random/800x600?ai',
+    image: '/random/800x600?ai',
   },
   {
     title: 'For Enterprises',
@@ -37,7 +37,7 @@ const cards = [
       { icon: '🔁', text: 'Reusable Avatar Templates' },
       { icon: '🔒', text: 'Secure & Customizable' },
     ],
-    image: 'https://source.unsplash.com/random/800x600?business',
+    image: '/random/800x600?business',
   },
 ]
 
