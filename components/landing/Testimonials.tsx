@@ -94,36 +94,36 @@ export default function Testimonials() {
 
         <div className="relative w-full overflow-hidden">
           {/* First Marquee */}
-          <div className="flex animate-marquee whitespace-nowrap py-4">
+          <div className="flex animate-marquee whitespace-nowrap py-8">
             {marqueeItems1.map((testimonial, index) => (
               <div
                 key={index}
-                className="inline-flex items-center justify-center mx-4 md:mx-8"
+                className="inline-flex items-center justify-center mx-6 md:mx-12"
               >
                 <Image
                   src={testimonial.src}
                   alt={testimonial.name}
-                  width={150}
-                  height={100}
-                  className="object-contain h-12 md:h-16 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300"
+                  width={200}
+                  height={150}
+                  className="object-contain h-20 md:h-24 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300"
                 />
               </div>
             ))}
           </div>
 
           {/* Second Marquee */}
-          <div className="flex animate-marquee-reverse whitespace-nowrap py-4">
+          <div className="flex animate-marquee-reverse whitespace-nowrap py-8">
             {marqueeItems2.map((testimonial, index) => (
               <div
                 key={index}
-                className="inline-flex items-center justify-center mx-4 md:mx-8"
+                className="inline-flex items-center justify-center mx-6 md:mx-12"
               >
                 <Image
                   src={testimonial.src}
                   alt={testimonial.name}
-                  width={150}
-                  height={100}
-                  className="object-contain h-12 md:h-16 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300"
+                  width={200}
+                  height={150}
+                  className="object-contain h-20 md:h-24 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300"
                 />
               </div>
             ))}
