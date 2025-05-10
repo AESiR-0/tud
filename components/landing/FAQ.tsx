@@ -8,67 +8,61 @@ import { motion } from "framer-motion";
 
 const faqs = [
   {
-    question: "Can I create videos in regional Indian languages?",
-    answer:
-      "Yes! We support Hindi, Tamil, Malayalam, Telugu, Kannada, and many more.",
+    question: "What is AI video technology?",
+    answer: "AI video technology uses artificial intelligence to automate and enhance video production processes, including translation, voice synthesis, and content adaptation across different languages and formats."
   },
   {
-    question: "Can I use my own script?",
-    answer: "Absolutely. Or we'll help you write one that converts.",
+    question: "How does the translation process work?",
+    answer: "Our AI system analyzes your video content, translates the speech while maintaining natural intonation, and synchronizes the new audio with the video, ensuring perfect lip-sync and emotional expression."
   },
   {
-    question: "Can I get my own avatar?",
-    answer: "Yes. Custom avatar creation is available on request.",
+    question: "What languages do you support?",
+    answer: "We support over 50 languages, including major global languages and regional dialects. Our system continuously learns and improves to support more languages and dialects."
   },
+  {
+    question: "How long does it take to process a video?",
+    answer: "Processing time depends on video length and complexity. Typically, a 5-minute video can be translated and processed within 24 hours. We offer expedited processing for urgent projects."
+  },
+  {
+    question: "What video formats do you accept?",
+    answer: "We accept all major video formats including MP4, MOV, AVI, and WMV. For best results, we recommend high-quality source files with clear audio."
+  }
 ];
 
 export default function FAQ() {
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="container mx-auto px-4">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Frequently Asked Questions
-          </h2>
-          <p className="max-w-2xl mx-auto text-gray-600 text-lg md:text-xl">
-            Find answers to common questions about our AI avatar services.
-          </p>
-        </motion.div>
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#1a1a1a] mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-base sm:text-lg text-[#1a1a1a]/80">
+              Find answers to common questions about our AI video technology and services.
+            </p>
+          </div>
 
-        <motion.div
-          className="max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
-              <motion.div
+              <AccordionItem
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                value={`item-${index}`}
+                className="border-b border-[#1a1a1a]/10"
               >
-                <AccordionItem
-                  value={`item-${index}`}
-                  className="border-b border-gray-200 py-4"
-                >
-                  <AccordionTrigger className="text-left hover:text-yellow transition-colors text-lg md:text-xl font-semibold">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-600 text-base md:text-lg pt-2">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              </motion.div>
+                <AccordionTrigger className="text-left text-base sm:text-lg font-medium text-[#1a1a1a] py-4">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-base sm:text-lg text-[#1a1a1a]/80">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
             ))}
           </Accordion>
         </motion.div>

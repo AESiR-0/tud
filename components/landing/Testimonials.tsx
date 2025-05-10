@@ -2,19 +2,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Quote } from "lucide-react";
 
 const testimonials = [
   {
-    role: "Growth Lead, D2C Wellness Brand",
-    quote:
-      "We saved weeks of production time and launched our multilingual campaigns 4x faster. Game-changer!",
-    stars: 5,
+    quote: "This AI video technology has revolutionized our content creation process. We're now able to produce high-quality videos in multiple languages at a fraction of the cost.",
+    author: "Sarah Johnson",
+    role: "Marketing Director",
+    company: "Global Tech Solutions",
   },
   {
-    role: "VP Marketing, EdTech Startup",
-    quote:
-      "We don't need studios anymore. The AI avatar does it all — in every language our audience speaks.",
-    stars: 5,
+    quote: "The ability to create consistent, professional videos across different platforms has been a game-changer for our brand. The quality is outstanding.",
+    author: "Michael Chen",
+    role: "Content Strategist",
+    company: "Digital Innovations",
   },
 ];
 
@@ -42,48 +43,44 @@ const marqueeItems2 = [...testimonials2, ...testimonials2];
 
 export default function Testimonials() {
   return (
-    <section className="py-12 md:py-20 bg-yellow overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-yellow">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="text-center mb-8 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-black">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-[#1a1a1a]">
             What Our Clients Say
           </h2>
-          <p className="max-w-2xl mx-auto text-black/80 text-base md:text-lg">
-            Don't just take our word for it. Here's what our customers have to say.
+          <p className="text-base sm:text-lg text-[#1a1a1a]/80 max-w-2xl mx-auto">
+            Hear from businesses that have transformed their video production with our AI technology
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12 md:mb-16">
           {testimonials.map((testimonial, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
+              key={testimonial.author}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <Card className="bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <CardContent className="p-6 md:p-8">
-                  <div className="flex mb-4">
-                    {[...Array(testimonial.stars)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-5 w-5 fill-yellow text-yellow"
-                      />
-                    ))}
-                  </div>
-                  <blockquote className="italic mb-6 text-black text-base md:text-lg">
+              <Card className="h-full border-none bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300">
+                <CardContent className="p-4 sm:p-6">
+                  <Quote className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-[#1a1a1a] mb-3 sm:mb-4" />
+                  <p className="text-sm sm:text-base text-[#1a1a1a]/80 mb-4 sm:mb-6 italic">
                     "{testimonial.quote}"
-                  </blockquote>
+                  </p>
                   <div>
-                    <p className="text-sm md:text-base text-black/70 font-medium">
-                      {testimonial.role}
+                    <h4 className="text-base sm:text-lg font-semibold text-[#1a1a1a]">
+                      {testimonial.author}
+                    </h4>
+                    <p className="text-sm sm:text-base text-[#1a1a1a]/60">
+                      {testimonial.role}, {testimonial.company}
                     </p>
                   </div>
                 </CardContent>
@@ -93,37 +90,6 @@ export default function Testimonials() {
         </div>
 
       </div>
-{/* 
-      <style jsx global>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(calc(-100% - 1rem));
-          }
-        }
-        @keyframes marquee-reverse {
-          0% {
-            transform: translateX(calc(-100% - 1rem));
-          }
-          100% {
-            transform: translateX(0);
-          }
-        }
-        .animate-marquee {
-          animation: marquee 30s linear infinite;
-          will-change: transform;
-        }
-        .animate-marquee-reverse {
-          animation: marquee-reverse 30s linear infinite;
-          will-change: transform;
-        }
-        .animate-marquee:hover,
-        .animate-marquee-reverse:hover {
-          animation-play-state: paused;
-        }
-      `}</style> */}
     </section>
   );
 } 

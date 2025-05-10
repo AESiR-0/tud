@@ -6,11 +6,13 @@ import Benefits from "@/components/landing/Benefits";
 import FAQ from "@/components/landing/FAQ";
 import CTA from "@/components/landing/CTA";
 import Testimonials from "@/components/landing/Testimonials";
-import ParallaxProcess from "@/components/ParallaxProcess";
-import RoadmapDotted from "@/components/RoadMap";
-import WhyStartCard from "@/components/whyStatCard";
-import AvatarCarousel from "@/components/WhyStatCarousel";
+import Applications from "@/components/landing/Applications";
+import Stats from "@/components/landing/Stats";
+import Story from "@/components/landing/Story";
 import InteractiveContent from "@/components/InteractiveContent";
+import Founder from "@/components/landing/Founder";
+import HowItWorks from "@/components/landing/HowItWorks";
+import ContactForm from "@/components/landing/ContactForm";
 
 export default function Home() {
   return (
@@ -31,11 +33,15 @@ export default function Home() {
         <main>
           <Hero />
           <InteractiveContent />
+          <HowItWorks />
           <Benefits />
-          <RoadmapDotted />
-          <AvatarCarousel />
+          <Applications />
+          <Stats />
+          <Story />
+          <Founder />
           <Testimonials />
           <FAQ />
+          <ContactForm />
           <CTA />
         </main>
       </div>

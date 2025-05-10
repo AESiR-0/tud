@@ -33,7 +33,8 @@
     "tailwind-merge": "^2.6.0",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.165.0"
+    "three": "^0.165.0",
+    "use-count-up": "^3.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
