@@ -42,6 +42,7 @@ export default function InteractiveContent() {
   const [isMobile, setIsMobile] = useState(false);
   const [isVideoLoading, setIsVideoLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const cursorRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -69,14 +70,14 @@ export default function InteractiveContent() {
         if (intervalId) {
           clearInterval(intervalId);
         }
-        
+
         setProgress(0);
         const startTime = Date.now();
-        
+
         intervalId = setInterval(() => {
           const elapsed = Date.now() - startTime;
           const newProgress = (elapsed / TRANSITION_DURATION) * 100;
-          
+
           if (newProgress >= 100) {
             setProgress(100);
             if (intervalId) {
@@ -103,7 +104,7 @@ export default function InteractiveContent() {
   const handleVideoChange = (index: number) => {
     if (videoRef.current && !isVideoLoading) {
       setIsVideoLoading(true);
-      
+
       // Fade out current video
       gsap.to(videoRef.current, {
         opacity: 0,
@@ -221,6 +222,7 @@ export default function InteractiveContent() {
         scrub: isMobile ? 0.8 : 0.4,
         onUpdate: (self) => {
           const progress = Math.min(Math.max(self.progress, 0), 1);
+          setScrollProgress(progress);
           const sectionIndex = Math.min(
             Math.floor(progress * contentBlocks.length),
             contentBlocks.length - 1
@@ -245,6 +247,13 @@ export default function InteractiveContent() {
 
   return (
     <div ref={sectionRef} className="relative min-h-screen bg-gradient-to-b from-yellow to-white text-black overflow-hidden">
+      {/* Scroll Progress Bar */}
+      <div className="fixed left-0 top-0 w-full h-1 z-50">
+        <div
+          className="bg-gradient-to-r from-white to-gray-200 h-full py-1 transition-all duration-200"
+          style={{ width: `${scrollProgress * 100}%` }}
+        />
+      </div>
       {/* Custom Cursor (desktop only) */}
       {!isMobile && (
         <div
@@ -303,7 +312,7 @@ export default function InteractiveContent() {
                 </p>
                 {isMobile && safeActiveIndex === index && (
                   <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20">
-                    <div 
+                    <div
                       className="h-full bg-[#FFD700] transition-all duration-100"
                       style={{ width: `${progress}%` }}
                     />

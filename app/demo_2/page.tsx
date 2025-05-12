@@ -21,7 +21,7 @@ export default function Home() {
         {/* Duckling Logo */}
         <div className="fixed z-10 bottom-5 right-10">
           <Image
-            src="/images/TUD Assets-03.png"
+            src="/images/duck1.png"
             height={32}
             width={32}
             alt="duckling"
