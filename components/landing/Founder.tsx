@@ -5,10 +5,10 @@ import { ChevronRight } from "lucide-react";
 
 export default function Founder() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-yellow-50 to-yellow">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}

@@ -1,9 +1,13 @@
+'use client'
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import VideoComparison from "./VideoComparison";
+import { useState } from "react";
 
 export default function Hero() {
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
   return (
     <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-[#1a1a1a]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,17 +47,32 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center"
+            className="w-full max-w-4xl mb-8 sm:mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
+            <VideoComparison
+              beforeVideo="/everything_ai_media/before_after_effect/before.mp4"
+              afterVideo="/everything_ai_media/before_after_effect/after.mp4"
+              className="shadow-2xl"
+            />
+          </motion.div>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
             <Button
               size="lg"
+              onMouseEnter={() => setIsButtonHovered(true)}
+              onMouseLeave={() => setIsButtonHovered(false)}
               className="w-full sm:w-auto text-base sm:text-lg hover:bg-black transition-all bg-yellow hover:text-white text-[#1a1a1a]"
             >
               Get Your First Video
-              <ChevronRight className="ml-2 h-4 w-4" />
+              <ChevronRight className={`h-4 w-4 ${isButtonHovered ? 'ml-4' : 'ml-2'}`} />
             </Button>
           </motion.div>
         </motion.div>

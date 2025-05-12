@@ -11,7 +11,7 @@ import Stats from "@/components/landing/Stats";
 import Story from "@/components/landing/Story";
 import InteractiveContent from "@/components/InteractiveContent";
 import Founder from "@/components/landing/Founder";
-import HowItWorks from "@/components/landing/HowItWorks";
+import Media from "@/components/landing/Media";
 import ContactForm from "@/components/landing/ContactForm";
 
 export default function Home() {
@@ -33,9 +33,9 @@ export default function Home() {
         <main>
           <Hero />
           <InteractiveContent />
-          <HowItWorks />
           <Benefits />
           <Applications />
+          <Media />
           <Stats />
           <Story />
           <Founder />

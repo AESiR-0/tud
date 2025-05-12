@@ -43,7 +43,7 @@ const marqueeItems2 = [...testimonials2, ...testimonials2];
 
 export default function Testimonials() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-yellow">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24  bg-yellow">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
